@@ -1,10 +1,25 @@
 package org.yearup.data.mysql;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.yearup.models.Category;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
-class MySqlCategoryDaoTest {
+class MySqlCategoryDaoTest extends BaseDaoTestClass {
+
+    private MySqlCategoryDao dao;
+
+    @BeforeEach
+    public void setup()
+    {
+        dao = new MySqlCategoryDao(dataSource) {
+            @Override
+            public List<Category> getAllCategories(Integer categoryID, String name, String description) {
+                return List.of();
+            }
+        };
+    }
 
     @Test
     void getAllCategories() {

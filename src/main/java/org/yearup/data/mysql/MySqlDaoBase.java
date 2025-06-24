@@ -1,8 +1,11 @@
 package org.yearup.data.mysql;
 
+import org.yearup.models.Category;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public abstract class MySqlDaoBase
 {
@@ -17,4 +20,6 @@ public abstract class MySqlDaoBase
     {
         return dataSource.getConnection();
     }
+
+    public abstract List<Category> getAllCategories(Integer categoryID, String name, String description);
 }

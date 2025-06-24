@@ -9,10 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
+public abstract class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 {
     public MySqlCategoryDao(DataSource dataSource)
     {
@@ -20,10 +21,33 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     }
 
     @Override
-    public List<Category> getAllCategories()
+    public List<Category> getAllCategories(Integer categoryID, String name, String description)
     {
-        // get all categories
-        return null;
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT * FROM categories WHERE category_id = ? AND name = ? AND description = ?";
+
+        try(Connection connection = getConnection()){
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1,categoryID );
+            statement.setString(2, name);
+            statement.setString(3, description);
+
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Category category = mapRow(resultSet);
+                    categories.add(category);
+
+                }
+
+            }
+
+        }catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        return categories;
     }
 
     @Override
