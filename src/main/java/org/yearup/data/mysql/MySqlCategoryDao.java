@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public abstract class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
+public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 {
     public MySqlCategoryDao(DataSource dataSource)
     {
@@ -21,28 +21,25 @@ public abstract class MySqlCategoryDao extends MySqlDaoBase implements CategoryD
     }
 
     @Override
-    public List<Category> getAllCategories(Integer categoryID, String name, String description)
+    public List<Category> getAllCategories()
     {
         List<Category> categories = new ArrayList<>();
-        String sql = "SELECT * FROM categories WHERE category_id = ? AND name = ? AND description = ?";
+        String sql = "SELECT * FROM categories";
 
         try(Connection connection = getConnection()){
             PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                int categoryID = resultSet.getInt("category_id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
 
-            statement.setInt(1,categoryID );
-            statement.setString(2, name);
-            statement.setString(3, description);
+                categories.add(new Category(categoryID, name,description));
 
-            try(ResultSet resultSet = statement.executeQuery()){
-                while(resultSet.next()){
-                    Category category = mapRow(resultSet);
-                    categories.add(category);
-
-                }
 
             }
 
-        }catch (SQLException e)
+    }catch (SQLException e)
         {
             throw new RuntimeException(e);
         }

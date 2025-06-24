@@ -13,12 +13,7 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
     @BeforeEach
     public void setup()
     {
-        dao = new MySqlCategoryDao(dataSource) {
-            @Override
-            public List<Category> getAllCategories(Integer categoryID, String name, String description) {
-                return List.of();
-            }
-        };
+        dao = new MySqlCategoryDao(dataSource);
     }
 
     @Test

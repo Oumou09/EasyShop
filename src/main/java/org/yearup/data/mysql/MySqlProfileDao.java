@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 @Component
-public abstract class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
+public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 {
     public MySqlProfileDao(DataSource dataSource)
     {

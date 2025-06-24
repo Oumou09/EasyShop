@@ -2,6 +2,7 @@ package org.yearup.controllers;
 
 import javax.validation.Valid;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

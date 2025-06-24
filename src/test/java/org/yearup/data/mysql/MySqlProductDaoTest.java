@@ -19,12 +19,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass
     @BeforeEach
     public void setup()
     {
-        dao = new MySqlProductDao(dataSource) {
-            @Override
-            public List<Category> getAllCategories(Integer categoryID, String name, String description) {
-                return List.of();
-            }
-        };
+        dao = new MySqlProductDao(dataSource);
     }
 
     @Test

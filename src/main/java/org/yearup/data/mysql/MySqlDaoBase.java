@@ -20,6 +20,4 @@ public abstract class MySqlDaoBase
     {
         return dataSource.getConnection();
     }
-
-    public abstract List<Category> getAllCategories(Integer categoryID, String name, String description);
 }
