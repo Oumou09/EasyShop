@@ -11,7 +11,7 @@ import org.yearup.models.User;
 import java.security.Principal;
 
 // convert this class to a REST controller
-// only logged in users should have access to these actions
+// only logged-in users should have access to these actions
 public class ShoppingCartController
 {
     // a shopping cart requires
@@ -19,20 +19,24 @@ public class ShoppingCartController
     private UserDao userDao;
     private ProductDao productDao;
 
-
+    public ShoppingCartController(ShoppingCartDao shoppingCartDao, UserDao userDao, ProductDao productDao) {
+        this.shoppingCartDao = shoppingCartDao;
+        this.userDao = userDao;
+        this.productDao = productDao;
+    }
 
     // each method in this controller requires a Principal object as a parameter
     public ShoppingCart getCart(Principal principal)
     {
         try
         {
-            // get the currently logged in username
+            // get the currently logged-in username
             String userName = principal.getName();
             // find database user by userId
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
 
-            // use the shoppingcartDao to get all items in the cart and return the cart
+            // use the shoppingCartDao to get all items in the cart and return the cart
             return null;
         }
         catch(Exception e)
