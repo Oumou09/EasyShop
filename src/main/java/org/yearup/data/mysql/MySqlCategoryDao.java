@@ -33,9 +33,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 int categoryID = resultSet.getInt("category_id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
-
                 categories.add(new Category(categoryID, name,description));
-
 
             }
 
@@ -82,6 +80,11 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 
             int rowAffected = statement.executeUpdate();
 
+            if (rowAffected == 0){
+                throw new SQLException("Creating category failed, no rows affected.");
+
+            }
+
             if(rowAffected > 0){
                 ResultSet generatedKeys = statement.getGeneratedKeys();
 
@@ -114,7 +117,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             statement.setString(1, category.getName());
             statement.setString(2, category.getDescription());
             statement.setInt(3, categoryId);
-
             statement.executeUpdate();
 
 
