@@ -110,15 +110,16 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 " SET name = ? " +
                 "   , description = ? " +
                 " WHERE category_id = ?;";
-
         try(Connection connection = getConnection()){
             PreparedStatement statement = connection.prepareStatement(sql);
-            int resultSet = statement.executeUpdate();
-           while(resultSet.next){
+            statement.setString(1, category.getName());
+            statement.setString(2, category.getDescription());
+            statement.setInt(3, categoryId);
+            int rowsAffected = statement.executeUpdate();
 
+            if (rowsAffected == 0) {
+                throw new RuntimeException("Update failed: No category found with ID " + categoryId);
             }
-
-
 
         }catch (SQLException e)
         {
