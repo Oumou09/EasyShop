@@ -19,51 +19,67 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
 
 
     @Override
-    public ShoppingCart addProductToCart(int userId, int productId, int quantity) {
-        String sql = "INSERT INTO shopping_cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
+    public ShoppingCart createOrder(int userId, int productId, int quantity) {
+        return null;
+    }
 
-        try (Connection connection = getConnection()) {
+    @Override
+    public ShoppingCart getByUserId(int userId) {
+        String sql = "SELECT * FROM shopping_cart WHERE user_id = ?";
+
+        ShoppingCart cart = new ShoppingCart();
+        try (Connection connection = getConnection())
+        {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
-            statement.setInt(2, productId);
-            statement.setInt(3, quantity);
-            statement.executeUpdate(); // use this instead of executeQuery
-        } catch (SQLException e) {
+
+            try(ResultSet resultSet =  statement.executeQuery() ){
+                while (resultSet.next()){
+                    return cart;
+                }
+
+            }
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
-
-        // Return the ShoppingCart object
-        ShoppingCart cart = new ShoppingCart();
-//        ShoppingCartItem.setID(userId);
-//        cart.setProductID(productId);
-//        cart.setQuantity(quantity);
-
         return cart;
     }
 
 
     @Override
     public ShoppingCart addProductToCart(int userId, int productId) {
-        ShoppingCart cart = null;
-        String sql = "INSERT INTO (user_id, product_id, quantity) shopping_cart " +
-                "VALUES(?, ?)";
-        try(Connection connection = getConnection()){
+        ShoppingCart cart = new ShoppingCart();
+        String sql = "INSERT INTO shopping_cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
+
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             statement.setInt(2, productId);
+            statement.setInt(3, 1);
             statement.executeUpdate();
-        }catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
         return cart;
     }
 
     @Override
+    public ShoppingCart addAnotherProductToCart(int userId, int productId) {
+        return null;
+    }
+
+    @Override
+    public ShoppingCart getCartAfterCheckout() {
+        return null;
+    }
+
+
+    @Override
     public ShoppingCart updateProductQuantity(int userId, int productId, int quantity) {
-        ShoppingCart cart = null;
+        ShoppingCart cart = new ShoppingCart();
 
         String sql = "UPDATE shopping_cart" +
                 "SET quantity = ?" +
@@ -103,6 +119,10 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             return null;
 
     }
+    @Override
+    public ShoppingCart getEmptyCart() {
+        return null;
+    }
 
     @Override
     public ShoppingCart removeProductById(int userId, int productId) {
@@ -120,30 +140,6 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         return null;
     }
 
-
-    @Override
-    public ShoppingCart getByUserId(int userId) {
-        String sql = "SELECT * FROM shopping_cart WHERE user_id = ?";
-
-        ShoppingCart cart = new ShoppingCart();
-        try (Connection connection = getConnection())
-        {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, userId);
-
-            try(ResultSet resultSet =  statement.executeQuery() ){
-                while (resultSet.next()){
-                    return cart;
-                }
-
-            }
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return cart;
-    }
 
 // private ShoppingCartItem mapRowToCartItem(ResultSet row) throws SQLException {
 //    ShoppingCartItem item = new ShoppingCartItem();
