@@ -44,18 +44,25 @@ public class CategoriesController
     @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id)
     {
+            Category category = null;
 
-            Category category = categoryDao.getById(id);
-            if (category == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+            try {
+                category = categoryDao.getById(id);
+
+            }catch(Exception ex)
+            {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
             }
 
+        if (category == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+        }
         return category;
     }
 
     // https://localhost:8080/categories/1/products
     @GetMapping("{categoryId}/products")
-    @PreAuthorize("hasRole('ROLE_ADMIN')") //Ask Raymond about tomorrow
+//    @PreAuthorize("hasRole('ROLE_ADMIN')") //Ask Raymond about tomorrow
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
 
@@ -107,6 +114,7 @@ public class CategoriesController
 
            if(category == null)
                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
             categoryDao.delete(id);
 
         }catch(Exception ex)
