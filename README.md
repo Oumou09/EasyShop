@@ -1,4 +1,4 @@
-# Project Title
+# EasyShop
 
 ## Description of the Project
 
@@ -19,23 +19,30 @@ Instructions on how to set up and run the project using IntelliJ IDEA.
 
 ### Prerequisites
 
-- IntelliJ IDEA: Ensure you have IntelliJ IDEA installed, which you can download from [here](https://www.jetbrains.com/idea/download/).
-- Java SDK: Make sure Java SDK is installed and configured in IntelliJ.
-
+- IntelliJ IDEA: Download and install from https://www.jetbrains.com/idea/download/. 
+- Java SDK: Ensure Java SDK (version 17 or compatible) is installed and configured in IntelliJ. 
+- MySQL Database: A running MySQL server with the EasyShop schema created and configured.
+- 
 ### Running the Application in IntelliJ
 
 Follow these steps to get your application running within IntelliJ IDEA:
 
-1. Open IntelliJ IDEA.
-2. Select "Open" and navigate to the directory where you cloned or downloaded the project.
-3. After the project opens, wait for IntelliJ to index the files and set up the project.
-4. Find the main class with the `public static void main(String[] args)` method.
-5. Right-click on the file and select 'Run 'YourMainClassName.main()'' to start the application.
-
+1. Clone the GitHub repository containing the EasyShop project. 
+2. Open IntelliJ IDEA and select Open, then navigate to the project folder. 
+3. Allow IntelliJ to index the project and download dependencies. 
+4. Configure the database connection in application.properties or application.yml as per your local MySQL settings. 
+5. Locate the main Spring Boot class EasyshopApplication.java. 
+6. Right-click and select Run 'EasyshopApplication.main()'. 
+7. Use Postman or any REST client to test API endpoints.
+8. 
 ## Technologies Used
 
-- Java: Mention the version you are using.
-- Any additional libraries or frameworks used in the project.
+- Java 17 
+- Spring Boot 2.7.x 
+- Spring Security with JWT for authentication and authorization 
+- MySQL database 
+- Spring Data JDBC / JDBC Template for database access 
+- Postman for API testing
 
 ## Demo
 
@@ -43,29 +50,43 @@ Include screenshots or GIFs that show your application in action. Use tools like
 
 ![Application Screenshot](path/to/your/screenshot.png)
 
+## Most Difficult Code to Work With
+The most challenging part of EasyShop was implementing the Shopping Cart feature with JWT-secured user sessions. 
+
+Handling the persistence of cart items per user, ensuring correct increment/decrement of product quantities, and managing concurrency was tricky.
+
+Integrating security to restrict cart operations to authenticated users while providing clear REST endpoints required extensive debugging and testing.
+
+Another complex area was fixing product duplication bugs during product updates — ensuring updates modify existing records rather than inserting duplicates.
+
 ## Future Work
 
 Outline potential future enhancements or functionalities you might consider adding:
 
-- Additional feature to be developed.
-- Improvement of current functionalities.
+- Complete Phase 4 user profile management, allowing users to update their profile information. 
+- Implement Phase 5 checkout process fully with order creation and payment integration. 
+- Add pagination and sorting capabilities for product listings. 
+- Develop a front-end client (React/Angular) to consume the API. 
+- Improve security with refresh tokens and more granular role-based access control. 
+- Add product reviews and ratings features.
 
 ## Resources
 
 List resources such as tutorials, articles, or documentation that helped you during the project.
 
-- [Java Programming Tutorial](https://www.example.com)
-- [Effective Java](https://www.example.com)
+- Potato Sensei
+- https://github.com/RayMaroun/yearup-spring-section-10-2025/tree/master/pluralsight
+- A council of my pers, they were really amazing moral support.
 
 ## Team Members
 
-- **Name 1** - Specific contributions or roles.
-- **Name 2** - Specific contributions or roles.
+- **Oumou Diallo** -  Backend development, security, and shopping cart implementation.
+
 
 ## Thanks
 
 Express gratitude towards those who provided help, guidance, or resources:
 
-- Thank you to [Mentor's Name] for continuous support and guidance.
-- A special thanks to all teammates for their dedication and teamwork.
+- Thank you to Raymond Maroun for continuous guidance and support throughout the project. 
+- A pecial thanks to the course instructors and peers for insightful discussions and feedback.
  
