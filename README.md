@@ -2,9 +2,16 @@
 
 ## Description of the Project
 
-Briefly describe what this Java console application does. Mention its purpose and who the intended users are. Explain the main functionality and what problems it aims to solve.
+EasyShop is a Java Spring Boot e-commerce backend application designed to manage product categories, products, user shopping carts, user profiles, and order checkout functionality. 
 
-![Class Diagram](path/to/your/class_diagram.png)
+This application provides RESTful APIs for managing an online store's inventory and user shopping experience.
+
+Intended users are developers building or testing e-commerce websites, administrators managing product inventory, and end-users who shop online.
+
+The main purpose of EasyShop is to demonstrate a secure, role-based backend system that supports product browsing, cart management, and order processing, while enforcing user roles for administrative actions.
+
+The application aims to solve common challenges in online retail by providing a clear separation of concerns, proper authentication/authorization, and persistence of user shopping cart data
+
 
 ## User Stories
 
@@ -14,8 +21,6 @@ List the user stories that guided the development of your application. Format th
 - As a user, I want to receive immediate feedback, so I can understand what to do next.
 
 ## Setup
-
-Instructions on how to set up and run the project using IntelliJ IDEA.
 
 ### Prerequisites
 

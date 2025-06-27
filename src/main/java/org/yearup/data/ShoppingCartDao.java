@@ -1,9 +1,6 @@
 package org.yearup.data;
 
 import org.yearup.models.ShoppingCart;
-import org.yearup.models.ShoppingCartItem;
-
-import java.util.Map;
 
 
 public interface ShoppingCartDao
@@ -16,6 +13,6 @@ public interface ShoppingCartDao
     ShoppingCart clearCart(int userId);
     ShoppingCart removeProductById(int userId, int productId);
    ShoppingCart getByUserId(int userId);
-   ShoppingCart getEmptyCart();
+   ShoppingCart getEmptyCart(int userId);
     // add additional method signatures here
 }

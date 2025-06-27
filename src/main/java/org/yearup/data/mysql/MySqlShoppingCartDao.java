@@ -2,7 +2,6 @@ package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
 import org.yearup.data.ShoppingCartDao;
-import org.yearup.models.Product;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
 
@@ -12,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDao {
@@ -27,6 +25,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     @Override
     public ShoppingCart createOrder(int userId, int productId, int quantity) {
         String sql = "INSERT INTO shopping_cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
+//                "ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
 
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -57,8 +56,6 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     ShoppingCartItem items = mapRowToCartItem(resultSet);
-
-
                     shoppingCart.getItems().put(items.getProduct(), items);
                 }
 
@@ -141,7 +138,6 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
 
     @Override
     public ShoppingCart updateProductQuantity(int userId, int productId, int quantity) {
-        ShoppingCart cart = new ShoppingCart();
 
         String sql = "UPDATE shopping_cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
         try(Connection connection = getConnection()){
@@ -180,7 +176,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         return cart;
     }
     @Override
-    public ShoppingCart getEmptyCart() {
+    public ShoppingCart getEmptyCart(int userId) {
         return new ShoppingCart();
     }
 
