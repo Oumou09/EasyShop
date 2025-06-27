@@ -54,7 +54,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             ResultSet row = statement.executeQuery();
 
             if (row.next()) {
-                return mapRow(row);
+                Profile profile = mapRow(row);
+                return profile;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,8 +64,28 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     }
 
     @Override
-    public void update(Profile profile) {
+    public Profile update(Profile profile) {
+        String sql = "UPDATE profiles SET first_name = ?, last_name = ?, phone = ?, email = ?," +
+                " address = ?, city = ?," +
+                "state = ?, zip = ?" +
+                " WHERE user_id = ?";
 
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, profile.getFirstName());
+            statement.setString(2, profile.getLastName());
+            statement.setString(3, profile.getPhone());
+            statement.setString(4, profile.getEmail());
+            statement.setString(5, profile.getAddress());
+            statement.setString(6, profile.getCity());
+            statement.setString(7, profile.getState());
+            statement.setString(8, profile.getZip());
+            statement.setInt(9, profile.getUserId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return profile;
     }
 
     private Profile mapRow(ResultSet row) throws SQLException {
@@ -72,8 +93,12 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         profile.setUserId(row.getInt("user_id"));
         profile.setFirstName(row.getString("first_name"));
         profile.setLastName(row.getString("last_name"));
-        profile.setEmail(row.getString("email"));
         profile.setPhone(row.getString("phone"));
+        profile.setEmail(row.getString("email"));
+        profile.setAddress(row.getString("address"));
+        profile.setCity(row.getString("city"));
+        profile.setState(row.getString("state"));
+        profile.setZip(row.getString("zip"));
         return profile;
     }
 }
