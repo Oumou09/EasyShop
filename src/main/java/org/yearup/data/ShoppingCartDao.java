@@ -8,7 +8,7 @@ public interface ShoppingCartDao
     ShoppingCart createOrder(int userId, int productId, int quantity);
     ShoppingCart addProductToCart(int userId, int productId);
     ShoppingCart addAnotherProductToCart(int userId, int productId);
-    ShoppingCart getCartAfterCheckout();
+    ShoppingCart getCartAfterCheckout(int userId);
     ShoppingCart updateProductQuantity(int userId, int productId, int quantity);
     ShoppingCart clearCart(int userId);
     ShoppingCart removeProductById(int userId, int productId);
