@@ -16,6 +16,7 @@ import java.security.Principal;
 
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping ("/cart")
 public class ShoppingCartController {
     // a shopping cart requires
@@ -31,7 +32,6 @@ public class ShoppingCartController {
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
     public ShoppingCart getCart(Principal principal) {
         try {
             // get the currently logged-in username
@@ -40,6 +40,9 @@ public class ShoppingCartController {
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
 
+            if (user == null)
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found");
+
             // use the shoppingCartDao to get all items in the cart and return the cart
             return shoppingCartDao.getByUserId(userId);
         } catch (Exception e) {
@@ -47,18 +50,19 @@ public class ShoppingCartController {
         }
     }
 
+
     @GetMapping("/empty")
-    @PreAuthorize("isAuthenticated()")
     public ShoppingCart getEmptyCart() {
-        return shoppingCartDao.getEmptyCart();
+        try {
+            return shoppingCartDao.getEmptyCart();
+        }catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
     }
 
 
     // add a POST method to add a product to the cart - the url should be
-    // https://localhost:8080/cart/products/15 (15 is the productId to be added
-    @PostMapping("/cart/{productId}/custom")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/products/{productId}")
     public ShoppingCart addProductToCart(@PathVariable int productId, Principal principal) {
         try {
             String userName = principal.getName();
@@ -75,8 +79,8 @@ public class ShoppingCartController {
         }
     }
 
-    @PostMapping("/products/{productId}/increment")
-    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{productId}/")
+    @ResponseStatus(HttpStatus.CREATED)
     public ShoppingCart addAnotherProduct(@PathVariable int productId, Principal principal) {
         try {
 
@@ -96,10 +100,10 @@ public class ShoppingCartController {
         // add a PUT method to update an existing product in the cart - the url should be
         // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
         // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated
-        @PutMapping("/cart/{productId}")
+        @PutMapping("/{productId}")
         public void updateProductQuantity ( @PathVariable int productId,
-        @RequestBody ShoppingCartItem item,
-        Principal principal){
+                                            @RequestBody ShoppingCartItem item,
+                                                          Principal principal){
             try {
                 User user = userDao.getByUserName(principal.getName());
 
@@ -117,9 +121,7 @@ public class ShoppingCartController {
 
         // add a DELETE method to clear all products from the current users cart
         // https://localhost:8080/cart
-
-        @DeleteMapping("/cart/{productId}")
-        @ResponseStatus(HttpStatus.NO_CONTENT)
+        @DeleteMapping("/products/{productId}")
         public void removeProduct ( @PathVariable int productId, Principal principal){
             try {
                 String userName = principal.getName();
@@ -141,8 +143,6 @@ public class ShoppingCartController {
         }
 
         @DeleteMapping
-        @ResponseStatus(HttpStatus.NO_CONTENT)
-        @PreAuthorize("isAuthenticated()")
         public ShoppingCart clearCart (Principal principal){
             try {
 

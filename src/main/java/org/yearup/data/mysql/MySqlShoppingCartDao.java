@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -42,8 +43,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
 
     @Override
     public ShoppingCart getByUserId(int userId) {
-        Map<Integer, ShoppingCartItem> items1 = null;
         ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setItems(new HashMap<>());
         String sql = "SELECT s.user_id, s.product_id, s.quantity " +
                 "FROM shopping_cart s " +
                 "JOIN products p ON s.product_id = p.product_id " +
@@ -86,7 +87,6 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             item.setQuantity(1);
 
             cart.getItems().put(productId, item);
-           cart.getItems();
 
 
         } catch (SQLException e) {
@@ -99,7 +99,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
 
    @Override
     public ShoppingCart addAnotherProductToCart(int userId, int productId) {
-        String checkSql = "SELECT quantity FROM shopping_cart WHERE user_id = ? AND product_id = ?";
+        String checkSql = "SELECT product_id, quantity FROM shopping_cart WHERE user_id = ? AND product_id = ?";
         String updateSql = "UPDATE shopping_cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?";
         String insertSql = "INSERT INTO shopping_cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
 
@@ -133,8 +133,9 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     @Override
     public ShoppingCart getCartAfterCheckout(int userId) {
         clearCart(userId);
-        return new ShoppingCart();
-
+        ShoppingCart emptyCart = new ShoppingCart();
+        emptyCart.setItems(new HashMap<>());
+        return emptyCart;
     }
 
 
@@ -158,7 +159,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         {
             e.printStackTrace();
         }
-        return cart;
+        return getByUserId(userId);
     }
 
 
@@ -175,8 +176,8 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
                e.printStackTrace();
             }
 
-            return cart;
-
+        cart.setItems(new HashMap<>());
+        return cart;
     }
     @Override
     public ShoppingCart getEmptyCart() {

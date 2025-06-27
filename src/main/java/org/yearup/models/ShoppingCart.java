@@ -12,7 +12,6 @@ public class ShoppingCart
     {
         return items;
     }
-
     public void setItems(Map<Integer, ShoppingCartItem> items)
     {
         this.items = items;
