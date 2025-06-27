@@ -54,7 +54,7 @@ Follow these steps to get your application running within IntelliJ IDEA:
 Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
 
 ![Application Screenshot](path/to/your/screenshot.png)
-![Screenshot 2025-06-27 at 8.06.14![](Screenshot 2025-06-27 at 8.06.45 AM) AM.png](../../../Screenshot%202025-06-27%20at%208.06.14%E2%80%AFAM.png)
+![](![img.png](img.png))
 
 ## Most Difficult Code to Work With
 The most challenging part of EasyShop was implementing the Shopping Cart feature with JWT-secured user sessions. 
