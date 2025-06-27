@@ -6,22 +6,22 @@ import java.math.BigDecimal;
 
 public class ShoppingCartItem
 {
-    private Product product = null;
+    private int product = 0;
     private int quantity = 1;
     private BigDecimal discountPercent = BigDecimal.ZERO;
 
-    public ShoppingCartItem(Product product, int quantity, BigDecimal discountPercent) {
+    public ShoppingCartItem() {
         this.product = product;
         this.quantity = quantity;
         this.discountPercent = discountPercent;
     }
 
-    public Product getProduct()
+    public int getProduct()
     {
         return product;
     }
 
-    public void setProduct(Product product)
+    public void setProduct(int product)
     {
         this.product = product;
     }
@@ -49,12 +49,12 @@ public class ShoppingCartItem
     @JsonIgnore
     public int getProductId()
     {
-        return this.product.getProductId();
+        return this.product;
     }
 
     public BigDecimal getLineTotal()
     {
-        BigDecimal basePrice = product.getPrice();
+        BigDecimal basePrice = BigDecimal.valueOf(product);
         BigDecimal quantity = new BigDecimal(this.quantity);
 
         BigDecimal subTotal = basePrice.multiply(quantity);

@@ -54,7 +54,7 @@ public class ShoppingCartController
 
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
-    @PostMapping("/products/{productId}/custom")
+    @PostMapping("/cart/{productId}/custom")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
     public ShoppingCart addProductToCart(@PathVariable int productId, Principal principal) {
@@ -77,7 +77,7 @@ public class ShoppingCartController
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated
-    @PutMapping("/products/{productId}")
+    @PutMapping("/cart/{productId}")
     public void updateProductQuantity(@PathVariable int productId,
                                       @RequestBody ShoppingCartItem item,
                                       Principal principal) {
@@ -124,13 +124,15 @@ public class ShoppingCartController
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
-    public void clearCart(Principal principal) {
+    public ShoppingCart clearCart(Principal principal) {
         try {
+
             User user = userDao.getByUserName(principal.getName());
-            shoppingCartDao.clearCart(user.getId());
+          return   shoppingCartDao.clearCart(user.getId());
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to clear cart.");
         }
+
     }
 
 }
