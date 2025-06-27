@@ -8,14 +8,12 @@ This application provides RESTful APIs for managing an online store's inventory 
 
 Intended users are developers building or testing e-commerce websites, administrators managing product inventory, and end-users who shop online.
 
-The main purpose of EasyShop is to demonstrate a secure, role-based backend system that supports product browsing, cart management, and order processing, while enforcing user roles for administrative actions./Users/oumoudiallo/Desktop/Screenshot 2025-06-27 at 8.06.14 AM.png
+The main purpose of EasyShop is to demonstrate a secure, role-based backend system that supports product browsing, cart management, and order processing, while enforcing user roles for administrative actions.
 
 The application aims to solve common challenges in online retail by providing a clear separation of concerns, proper authentication/authorization, and persistence of user shopping cart data
 
 
 ## User Stories
-
-List the user stories that guided the development of your application. Format these stories as: "As a [type of user], I want [some goal] so that [some reason]."
 
 - As a user, I want to search for products by name or keyword so that I can quickly find specific items.
 - As a user, I want to view products grouped by category so that I can browse items that interest me.
@@ -52,11 +50,16 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ## Demo
 
-Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
 ![Application Screenshot](https://i.imgur.com/pAUuUI6.png)
 ![Application Screenshot](https://i.imgur.com/VAfdIM9.png)
 ![Application Screenshot](https://i.imgur.com/a72Q047.png)
-![Application Screenshot](https://i.imgur.com/AciJ2ku.png)
+![Application Screenshot](https://i.imgur.com/grQnLI3.png)
+![Application Screenshot](https://i.imgur.com/xRrfYGu.png)
+![Application Screenshot](https://i.imgur.com/A5gDMlq.png)
+![Application Screenshot](https://i.imgur.com/iq8vN4r.png)
+![Application Screenshot](https://i.imgur.com/tP5QxbM.png)
+![Application Screenshot](https://i.imgur.com/wbf22CV.png)
+![Application Screenshot](https://i.imgur.com/0XATIk2.png)
 
 
 ## Most Difficult Code to Work With
@@ -72,7 +75,6 @@ Another complex area was fixing product duplication bugs during product updates 
 
 Outline potential future enhancements or functionalities you might consider adding:
 
-- Complete Phase 4 user profile management, allowing users to update their profile information. 
 - Implement Phase 5 checkout process fully with order creation and payment integration. 
 - Add pagination and sorting capabilities for product listings. 
 - Develop a front-end client (React/Angular) to consume the API. 
@@ -81,8 +83,7 @@ Outline potential future enhancements or functionalities you might consider addi
 
 ## Resources
 
-List resources such as tutorials, articles, or documentation that helped you during the project.
-
+- Raymond Maroun - My instructor
 - Potato Sensei
 - https://github.com/RayMaroun/yearup-spring-section-10-2025/tree/master/pluralsight
 - A council of my peers, they were really amazing moral support.
@@ -93,8 +94,6 @@ List resources such as tutorials, articles, or documentation that helped you dur
 
 
 ## Thanks
-
-Express gratitude towards those who provided help, guidance, or resources:
 
 - Thank you to Raymond Maroun for continuous guidance and support throughout the project. 
 - A special thanks to my peers for insightful discussions and feedback.
