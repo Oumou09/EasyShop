@@ -13,7 +13,8 @@ import org.yearup.models.User;
 import java.security.Principal;
     @RestController
     @RequestMapping("/profile")
-    @PreAuthorize("isAuthenticated()") // Make sure only logged-in users can access
+    @PreAuthorize("isAuthenticated()")
+    @CrossOrigin // Make sure only logged-in users can access
     public class ProfileController {
         private final ProfileDao profileDao;
         private final UserDao userDao;

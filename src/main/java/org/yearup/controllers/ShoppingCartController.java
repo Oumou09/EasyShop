@@ -19,6 +19,7 @@ import java.security.Principal;
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping ("/cart")
+@CrossOrigin
 public class ShoppingCartController {
     private ShoppingCartDao shoppingCartDao;
     private UserDao userDao;
@@ -68,7 +69,7 @@ public class ShoppingCartController {
 
     // add a POST method to add a product to the cart - the url should be
     @PostMapping("/products/{productId}")
-    public ShoppingCart addProductToCart(@PathVariable int productId, @RequestBody ShoppingCartItem item,
+    public ShoppingCart addProductToCart(@PathVariable int productId,
                                          Principal principal) {
         try {
             String userName = principal.getName();
@@ -80,31 +81,30 @@ public class ShoppingCartController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
             }
 
-            int quantity = item.getQuantity();
-            return shoppingCartDao.createOrder(userId, productId, quantity);
+            return shoppingCartDao.createOrder(userId, productId, 1);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product to cart.");
         }
     }
-
-    @PostMapping("/{productId}/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ShoppingCart addAnotherProduct(@PathVariable int productId, Principal principal) {
-        try {
-
-                String userName = principal.getName();
-                User user = userDao.getByUserName(userName);
-
-                if (productDao.getById(productId) == null)
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
-
-                return shoppingCartDao.addAnotherProductToCart(user.getId(), productId);
-
-            } catch(Exception e){
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to increment product.");
-            }
-        }
+//
+//    @PostMapping("/{productId}/")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ShoppingCart addAnotherProduct(@PathVariable int productId, Principal principal) {
+//        try {
+//
+//                String userName = principal.getName();
+//                User user = userDao.getByUserName(userName);
+//
+//                if (productDao.getById(productId) == null)
+//                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+//
+//                return shoppingCartDao.addAnotherProductToCart(user.getId(), productId);
+//
+//            } catch(Exception e){
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to increment product.");
+//            }
+//        }
 
 
         // add a PUT method to update an existing product in the cart - the url should be
